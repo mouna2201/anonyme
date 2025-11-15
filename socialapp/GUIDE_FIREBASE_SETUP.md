@@ -1,14 +1,14 @@
 # Guide de Configuration Firebase
 
-## ⚠️ Problème actuel
-Le fichier `app/google-services.json` est un placeholder et ne fonctionne pas. Vous avez déjà un projet Firebase (`applicationanonyme-5ed28`), mais vous devez télécharger le fichier `google-services.json` pour l'application Android.
+## ✅ Configuration actuelle
+Le fichier `app/google-services.json` a été configuré avec le projet Firebase `socialapp-28101`. 
 
-## 📋 Étapes pour corriger
+## 📋 Vérifications nécessaires dans Firebase Console
 
 ### 1. Accéder à Firebase Console
 - Allez sur https://console.firebase.google.com/
 - Connectez-vous avec votre compte Google
-- Sélectionnez le projet **applicationanonyme-5ed28**
+- Sélectionnez le projet **socialapp-28101**
 
 ### 2. Ajouter une application Android
 1. Dans votre projet Firebase, cliquez sur l'icône **⚙️ Paramètres du projet** (en haut à gauche)
@@ -19,8 +19,9 @@ Le fichier `app/google-services.json` est un placeholder et ne fonctionne pas. V
 - **Nom du package Android** : `com.example.socialapp`
 - Cliquez sur **"Enregistrer l'application"**
 
-### 4. Télécharger google-services.json
-1. Téléchargez le fichier `google-services.json`
+### 4. Vérifier google-services.json
+Le fichier `app/google-services.json` est déjà configuré. Si vous devez le mettre à jour :
+1. Téléchargez le fichier `google-services.json` depuis Firebase Console
 2. **Remplacez** le fichier `app/google-services.json` dans votre projet par celui que vous venez de télécharger
 
 ### 5. Activer Authentication

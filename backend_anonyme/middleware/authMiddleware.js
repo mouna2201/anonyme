@@ -1,23 +1,50 @@
 const admin = require('firebase-admin');
 const User = require('../models/User');
+const fs = require('fs');
+const path = require('path');
 
 // Initialiser Firebase Admin
+let firebaseAdminInitialized = false;
+
 try {
-    const serviceAccount = require('../config/firebase-admin.json');
+    const configPath = path.join(__dirname, '../config/firebase-admin.json');
     
-    if (!admin.apps.length) {
-        admin.initializeApp({
-            credential: admin.credential.cert(serviceAccount)
-        });
-        console.log('✅ Firebase Admin initialisé avec succès');
+    // Vérifier si le fichier existe
+    if (fs.existsSync(configPath)) {
+        const serviceAccount = require(configPath);
+        
+        if (!admin.apps.length) {
+            admin.initializeApp({
+                credential: admin.credential.cert(serviceAccount)
+            });
+            firebaseAdminInitialized = true;
+            console.log('✅ Firebase Admin initialisé avec succès');
+        } else {
+            firebaseAdminInitialized = true;
+        }
+    } else {
+        console.error('❌ Fichier firebase-admin.json introuvable dans config/');
+        console.error('⚠️  Veuillez créer le fichier config/firebase-admin.json avec vos credentials Firebase Admin');
+        console.error('📖 Consultez config/FIREBASE_ADMIN_SETUP.md pour les instructions');
     }
 } catch (error) {
     console.error('❌ Erreur d\'initialisation Firebase Admin:', error.message);
-    console.error('⚠️  Assurez-vous que firebase-admin.json existe dans le dossier config/');
+    if (error.code === 'MODULE_NOT_FOUND') {
+        console.error('⚠️  Assurez-vous que firebase-admin.json existe dans le dossier config/');
+        console.error('📖 Consultez config/FIREBASE_ADMIN_SETUP.md pour les instructions');
+    }
 }
 
 const verifyToken = async (req, res, next) => {
     try {
+        // Vérifier si Firebase Admin est initialisé
+        if (!firebaseAdminInitialized || !admin.apps.length) {
+            return res.status(500).json({ 
+                error: 'Configuration Firebase manquante',
+                message: 'Firebase Admin n\'est pas configuré. Veuillez configurer firebase-admin.json dans le dossier config/'
+            });
+        }
+
         // Récupérer le token depuis le header Authorization
         const authHeader = req.headers.authorization;
         

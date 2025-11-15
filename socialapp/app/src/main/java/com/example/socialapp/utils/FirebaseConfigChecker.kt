@@ -35,15 +35,13 @@ object FirebaseConfigChecker {
             Pour que l'application fonctionne, vous devez :
             
             1. Aller sur https://console.firebase.google.com/
-            2. Créer ou sélectionner un projet
-            3. Ajouter une app Android avec le package :
-               com.example.socialapp
-            4. Télécharger google-services.json
-            5. Remplacer app/google-services.json
-            6. Activer Authentication → Email/Password
-            7. Reconstruire l'application
+            2. Sélectionner le projet : socialapp-28101
+            3. Activer Authentication → Email/Password
+            4. Activer Storage (pour les images)
+            5. Reconstruire l'application
             
-            Le fichier actuel est un placeholder et ne fonctionne pas.
+            Si le problème persiste, vérifiez que google-services.json 
+            est correctement configuré dans app/google-services.json
         """.trimIndent()
     }
 }
