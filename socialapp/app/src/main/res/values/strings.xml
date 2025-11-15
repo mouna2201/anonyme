@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">socialapp</string>
+    <string name="pas_de_compte_s_inscrire">Pas de compte ? S\'inscrire</string>
+    <string name="se_connecter">Se connecter</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="email">Email</string>
+    <string name="r_seau_anonyme">Réseau Anonyme</string>
+    <string name="d_j_un_compte_se_connecter">Déjà un compte ? Se connecter</string>
+    <string name="s_inscrire">S\'inscrire</string>
+    <string name="confirmer_mot_de_passe">Confirmer mot de passe</string>
+    <string name="nom_affich_optionnel">Nom affiché (optionnel)</string>
+    <string name="cr_er_un_compte">Créer un compte</string>
+</resources>
