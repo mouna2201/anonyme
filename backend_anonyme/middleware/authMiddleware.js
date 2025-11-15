@@ -13,14 +13,27 @@ try {
     if (fs.existsSync(configPath)) {
         const serviceAccount = require(configPath);
         
-        if (!admin.apps.length) {
-            admin.initializeApp({
-                credential: admin.credential.cert(serviceAccount)
-            });
-            firebaseAdminInitialized = true;
-            console.log('✅ Firebase Admin initialisé avec succès');
+        // Valider la structure du fichier service account
+        if (!serviceAccount.project_id) {
+            console.error('❌ Erreur: firebase-admin.json ne contient pas "project_id"');
+            console.error('⚠️  Le fichier doit être un service account key JSON téléchargé depuis Firebase Console');
+            console.error('⚠️  Ne pas utiliser google-services.json - ce sont deux fichiers différents!');
+            console.error('📖 Consultez config/FIREBASE_ADMIN_SETUP.md pour les instructions');
+        } else if (!serviceAccount.private_key || !serviceAccount.client_email) {
+            console.error('❌ Erreur: firebase-admin.json est incomplet');
+            console.error('⚠️  Le fichier doit contenir: project_id, private_key, et client_email');
+            console.error('📖 Consultez config/FIREBASE_ADMIN_SETUP.md pour les instructions');
         } else {
-            firebaseAdminInitialized = true;
+            if (!admin.apps.length) {
+                admin.initializeApp({
+                    credential: admin.credential.cert(serviceAccount)
+                });
+                firebaseAdminInitialized = true;
+                console.log('✅ Firebase Admin initialisé avec succès');
+                console.log(`📦 Projet: ${serviceAccount.project_id}`);
+            } else {
+                firebaseAdminInitialized = true;
+            }
         }
     } else {
         console.error('❌ Fichier firebase-admin.json introuvable dans config/');
@@ -31,6 +44,10 @@ try {
     console.error('❌ Erreur d\'initialisation Firebase Admin:', error.message);
     if (error.code === 'MODULE_NOT_FOUND') {
         console.error('⚠️  Assurez-vous que firebase-admin.json existe dans le dossier config/');
+        console.error('📖 Consultez config/FIREBASE_ADMIN_SETUP.md pour les instructions');
+    } else if (error.message.includes('project_id')) {
+        console.error('⚠️  Le fichier firebase-admin.json semble être au mauvais format');
+        console.error('⚠️  Assurez-vous d\'utiliser un Service Account Key JSON, pas google-services.json');
         console.error('📖 Consultez config/FIREBASE_ADMIN_SETUP.md pour les instructions');
     }
 }

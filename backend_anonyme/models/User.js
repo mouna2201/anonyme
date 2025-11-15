@@ -50,10 +50,8 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Index pour améliorer les performances
-userSchema.index({ firebaseUid: 1 });
-userSchema.index({ email: 1 });
-userSchema.index({ username: 1 });
+// Note: Les index sont automatiquement créés par les propriétés unique: true
+// Pas besoin de les définir explicitement pour éviter les doublons
 
 // Méthode pour obtenir un profil public
 userSchema.methods.getPublicProfile = function() {

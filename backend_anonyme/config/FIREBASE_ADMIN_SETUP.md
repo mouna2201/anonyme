@@ -44,6 +44,20 @@ Le fichier `firebase-admin.json` devrait ressembler à ceci :
 }
 ```
 
+## ⚠️ IMPORTANT : Différence entre google-services.json et firebase-admin.json
+
+**NE CONFONDEZ PAS** ces deux fichiers :
+
+- **`google-services.json`** : Utilisé par l'application Android (frontend)
+  - Téléchargé depuis Firebase Console → Paramètres du projet → Vos applications → Android
+  - Contient `project_info`, `client`, `api_key`
+  - **NE PAS utiliser pour le backend**
+
+- **`firebase-admin.json`** : Utilisé par le backend Node.js
+  - Téléchargé depuis Firebase Console → Paramètres du projet → Comptes de service
+  - Contient `type: "service_account"`, `project_id`, `private_key`, `client_email`
+  - **C'est celui-ci dont vous avez besoin pour le backend**
+
 ## ⚠️ Sécurité importante
 
 - **NE COMMITEZ JAMAIS** le fichier `firebase-admin.json` dans Git
@@ -77,4 +91,10 @@ Si vous voyez une erreur, vérifiez que :
 ### Erreur : "Permission denied"
 - Vérifiez les permissions du fichier
 - Assurez-vous que le serveur Node.js peut lire le fichier
+
+### Erreur : "Service account object must contain a string 'project_id' property"
+- **Vous utilisez probablement le mauvais fichier !**
+- Cette erreur signifie que vous avez peut-être copié `google-services.json` au lieu du Service Account Key
+- Le fichier `google-services.json` n'a pas de `project_id` au niveau racine (il a `project_info.project_id`)
+- **Solution** : Téléchargez le bon fichier depuis Firebase Console → Paramètres → Comptes de service → Générer une nouvelle clé privée
 

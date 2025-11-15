@@ -64,10 +64,7 @@ app.use((err, req, res, next) => {
 });
 
 // Connexion à MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
     console.log('✅ MongoDB connecté avec succès');
     console.log('📊 Base de données:', mongoose.connection.name);
