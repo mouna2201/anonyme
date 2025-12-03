@@ -84,10 +84,10 @@ dependencies {
     // Lifecycle
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
     implementation (libs.androidx.lifecycle.livedata.ktx)
-    implementation (libs.androidx.lifecycle.runtime.ktx.v262)
+    implementation (libs.androidx.lifecycle.runtime.ktx)
 
     // UI
-    implementation (libs.androidx.core.ktx.v1120)
+    implementation (libs.androidx.core.ktx)
     implementation (libs.androidx.appcompat)
     implementation (libs.material)
     implementation (libs.androidx.constraintlayout)
@@ -95,7 +95,7 @@ dependencies {
 
     // Image loading
     implementation (libs.glide)
-   // kapt ("com.github.bumptech.glide:compiler:4.16.0")
+    kapt ("com.github.bumptech.glide:compiler:4.16.0")
 
     // SwipeRefreshLayout
     implementation (libs.androidx.swiperefreshlayout)
