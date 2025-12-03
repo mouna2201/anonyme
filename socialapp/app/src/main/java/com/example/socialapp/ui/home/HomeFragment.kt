@@ -41,6 +41,7 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         setupListeners()
         loadUserProfile()
+        loadPosts() // Load posts regardless of user profile success
     }
 
     private fun setupRecyclerView() {
@@ -80,7 +81,7 @@ class HomeFragment : Fragment() {
             
             result.onSuccess { user ->
                 if (!isAdded || _binding == null) return@onSuccess
-                
+
                 currentUserId = user._id
                 postsAdapter = PostsAdapter(
                     currentUserId = currentUserId,
@@ -89,6 +90,7 @@ class HomeFragment : Fragment() {
                     onMoreClick = { post -> showMoreOptions(post) }
                 )
                 binding.rvPosts.adapter = postsAdapter
+                // Reload posts to update like states
                 loadPosts()
             }.onFailure { error ->
                 if (isAdded && _binding != null) {
@@ -139,7 +141,17 @@ class HomeFragment : Fragment() {
 
     private fun likePost(post: Post) {
         if (!isAdded || _binding == null) return
-        
+
+        // Check if user is authenticated
+        if (currentUserId.isEmpty()) {
+            Toast.makeText(
+                requireContext(),
+                "Vous devez être connecté pour aimer des posts",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
         lifecycleScope.launch {
             val result = repository.likePost(post._id)
 
